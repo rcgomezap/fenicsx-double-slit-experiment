@@ -50,4 +50,22 @@ Plane Surface(2) = {2};
 Physical Curve("outer_boundary", 13) = {1, 5, 6, 7, 11, 12};
 Physical Curve("bridge_boundaries", 14) = {2, 3, 4, 8, 9, 10};
 
-BooleanDifference{ Surface{1}; Delete; }{ Surface{2}; Delete; }
+BooleanDifference{ Surface{1}; Delete; }{ Surface{2}; Delete; }//+
+Physical Curve("inlet", 29) = {18};
+//+
+Physical Curve("outlet", 30) = {27};
+//+
+Physical Curve("wall", 31) = {17, 19, 20, 22, 24, 15, 14, 16, 13, 23, 26, 28, 25, 21};
+
+//+
+Field[1] = Box;
+Field[1].Thickness = 0.3;
+Field[1].XMin = 0.48;
+Field[1].XMax = 0.52;
+Field[1].YMin = 0.45;
+Field[1].YMax = 0.55;
+Field[1].ZMin = 0;
+Field[1].ZMax = 0;
+Field[1].VIn = 0.004;
+Field[1].VOut = 0.02;
+Background Field = 1;
