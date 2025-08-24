@@ -7517,7 +7517,9 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="The-Double-Slit-Experiment---FEniCSx">The Double Slit Experiment - FEniCSx<a class="anchor-link" href="#The-Double-Slit-Experiment---FEniCSx">¶</a></h1><p>This notebook demonstrates the simulation of the classic double slit experiment using the finite element method with FEniCSx. We solve the Helmholtz equation to model acoustic wave propagation through a domain with two narrow slits.</p>
+<h1 id="The-Double-Slit-Experiment---FEniCSx">The Double Slit Experiment - FEniCSx<a class="anchor-link" href="#The-Double-Slit-Experiment---FEniCSx">¶</a></h1><p>Author: Roberto Carlos Gómez Araque</p>
+<p>This notebook demonstrates the simulation of the classic double slit experiment using the finite element method with FEniCSx. We solve the Helmholtz equation to model acoustic wave propagation through a domain with two narrow slits.</p>
+<p><img alt="Module of the pressure field" src="result_p_modulus.png"/></p>
 <h2 id="Problem-Description">Problem Description<a class="anchor-link" href="#Problem-Description">¶</a></h2><p>The double slit experiment involves:</p>
 <ul>
 <li>An acoustic wave source at the inlet boundary</li>
@@ -7578,7 +7580,7 @@ This approximates an infinite domain by absorbing outgoing waves.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
@@ -7593,10 +7595,11 @@ This approximates an infinite domain by absorbing outgoing waves.</p>
 <span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
 <span class="kn">from</span> <span class="nn">packaging.version</span> <span class="kn">import</span> <span class="n">Version</span>
 
-
+<span class="c1"># Tags coming from the mesh physical groups</span>
 <span class="n">v_bc_wall_tag</span> <span class="o">=</span> <span class="mi">31</span>
 <span class="n">v_bc_inlet_tag</span> <span class="o">=</span> <span class="mi">29</span>
 <span class="n">v_bc_outlet_tag</span> <span class="o">=</span> <span class="mi">30</span>
+
 <span class="n">mesh_data</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">gmshio</span><span class="o">.</span><span class="n">read_from_msh</span><span class="p">(</span><span class="s2">"double_slit_mesh.msh"</span><span class="p">,</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gdim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">dolfinx_version</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Version</span><span class="p">(</span><span class="s2">"0.9.0"</span><span class="p">):</span>
     <span class="n">domain</span> <span class="o">=</span> <span class="n">mesh_data</span><span class="o">.</span><span class="n">mesh</span>
@@ -7604,8 +7607,6 @@ This approximates an infinite domain by absorbing outgoing waves.</p>
     <span class="n">facet_tags</span> <span class="o">=</span> <span class="n">mesh_data</span><span class="o">.</span><span class="n">facet_tags</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">domain</span><span class="p">,</span> <span class="n">boundary_tags</span><span class="p">,</span> <span class="n">facet_tags</span> <span class="o">=</span> <span class="n">mesh_data</span>
-
-<span class="n">domain</span><span class="o">.</span><span class="n">topology</span><span class="o">.</span><span class="n">create_connectivity</span><span class="p">(</span><span class="n">domain</span><span class="o">.</span><span class="n">topology</span><span class="o">.</span><span class="n">dim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">domain</span><span class="o">.</span><span class="n">topology</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7624,12 +7625,6 @@ Info    : 45295 nodes
 Info    : 90590 elements
 Info    : Done reading 'double_slit_mesh.msh'
 </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>array([], dtype=int32)</pre>
 </div>
 </div>
 </div>
@@ -7668,7 +7663,7 @@ Info    : Done reading 'double_slit_mesh.msh'
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [461]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="n">fem</span><span class="o">.</span><span class="n">functionspace</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="p">(</span><span class="s2">"Lagrange"</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -7721,7 +7716,7 @@ Info    : Done reading 'double_slit_mesh.msh'
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [462]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">ufl</span><span class="o">.</span><span class="n">Measure</span><span class="p">(</span><span class="s2">"ds"</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">subdomain_data</span><span class="o">=</span><span class="n">facet_tags</span><span class="p">)</span>
@@ -7786,7 +7781,7 @@ $$\int_{\Gamma_{in}} \frac{\partial p}{\partial n} \overline{v} \, ds = -i\omega
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">ufl</span><span class="o">.</span><span class="n">TrialFunction</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
@@ -7842,7 +7837,7 @@ $$\int_{\Gamma_{in}} \frac{\partial p}{\partial n} \overline{v} \, ds = -i\omega
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">bc_inlet</span> <span class="o">=</span> <span class="n">fem</span><span class="o">.</span><span class="n">dirichletbc</span><span class="p">(</span><span class="n">v_n</span><span class="p">,</span> <span class="n">fem</span><span class="o">.</span><span class="n">locate_dofs_topological</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">domain</span><span class="o">.</span><span class="n">topology</span><span class="o">.</span><span class="n">dim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">facet_tags</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">v_bc_inlet_tag</span><span class="p">)),</span> <span class="n">V</span><span class="p">)</span>
@@ -7871,7 +7866,7 @@ $$\int_{\Gamma_{in}} \frac{\partial p}{\partial n} \overline{v} \, ds = -i\omega
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [465]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">p_a</span> <span class="o">=</span> <span class="n">fem</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
@@ -7918,7 +7913,7 @@ $$\int_{\Gamma_{in}} \frac{\partial p}{\partial n} \overline{v} \, ds = -i\omega
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [466]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">problem</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
@@ -7948,7 +7943,7 @@ $$\int_{\Gamma_{in}} \frac{\partial p}{\partial n} \overline{v} \, ds = -i\omega
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [468]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">VTKFile</span><span class="p">(</span><span class="n">domain</span><span class="o">.</span><span class="n">comm</span><span class="p">,</span> <span class="s2">"solution.pvd"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -7978,7 +7973,6 @@ $$\int_{\Gamma_{in}} \frac{\partial p}{\partial n} \overline{v} \, ds = -i\omega
 </ul>
 </li>
 </ul>
-<p>The results demonstrate the classic double slit interference pattern with constructive and destructive interference regions downstream of the slits.</p>
 </div>
 </div>
 </div>
