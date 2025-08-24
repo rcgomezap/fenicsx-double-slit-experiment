@@ -2,17 +2,17 @@
 SetFactory("OpenCASCADE");
 
 // Geometry parameters
-domain_width = 1.0;
-domain_height = 1.0;
-slit_width = 0.04;  // Width of each slit opening
-slit_height = 0.1;  // Height of each slit opening
-bridge_height = 0.04;  // Height of central bridge
+domain_width = 5;
+domain_height = 2.0;
+slit_width = 0.003;  // Width of each slit opening
+slit_height = 0.4;  // Height of each slit opening
+bridge_height = 0.3;  // Height of central bridge
 wall_thickness = 0.0;  // Can be increased for thicker walls
 
 // Mesh size parameters
-mesh_size_coarse = 0.05;
-mesh_size_fine = 0.02;
-mesh_size_bridge = 0.004;
+mesh_size_coarse = 0.08;
+mesh_size_fine = 0.05;
+mesh_size_bridge = 0.001;
 
 // Calculated positions
 center_x = domain_width / 2.0;
@@ -80,7 +80,7 @@ Physical Curve("wall", 31) = {17, 19, 20, 22, 24, 15, 14, 16, 13, 23, 26, 28, 25
 
 // Field for refined meshing around bridge
 Field[1] = Box;
-Field[1].Thickness = 0.3;
+Field[1].Thickness = 1;
 Field[1].XMin = center_x - half_slit;
 Field[1].XMax = center_x + half_slit;
 Field[1].YMin = slit_bottom;
