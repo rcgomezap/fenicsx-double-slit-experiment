@@ -7,6 +7,7 @@ This project simulates the classic double slit experiment using the finite eleme
 - **`double_slit.ipynb`** - Main notebook containing the complete simulation
 - **`double_slit_mesh.geo`** - GMSH geometry file for the double slit domain
 - **`double_slit_mesh.msh`** - Generated mesh file (created from .geo file)
+- **`paraview_state.pvsm`** - ParaView state file with pre-configured visualization settings
 - **`.devcontainer/`** - Development container configuration
 
 ## Prerequisites
@@ -57,9 +58,19 @@ Open and run the **`double_slit.ipynb`** notebook:
 ### 4. Visualization
 
 **ParaView** is recommended for visualizing the results:
+
+#### Option 1: Load Results Manually
 1. Open ParaView
 2. Load the `solution.pvd` file
-3. Visualize the pressure field to see:
+3. Configure visualization settings manually
+
+#### Option 2: Use Pre-configured State File
+1. Open ParaView
+2. Load the state file: **File → Load State → `paraview_state.pvsm`**
+3. Update the data source path if needed
+4. The state file includes pre-configured visualization settings for optimal viewing
+
+Both methods will show:
    - Wave propagation from the inlet
    - Diffraction through the double slits
    - Interference patterns in the far field
