@@ -1,24 +1,45 @@
-// Gmsh project created for complex polygon with central bridge
+// Parametrized Gmsh project for double slit geometry
 SetFactory("OpenCASCADE");
 
-// Define points
-Point(1) = {0.0, 0.9, 0, 0.05};
-Point(2) = {0.48, 0.9, 0, 0.02};
-Point(3) = {0.48, 0.55, 0, 0.02};
-Point(4) = {0.52, 0.55, 0, 0.02};
-Point(5) = {0.52, 0.9, 0, 0.02};
-Point(6) = {1.0, 0.9, 0, 0.05};
-Point(7) = {1.0, 0.1, 0, 0.05};
-Point(8) = {0.52, 0.1, 0, 0.02};
-Point(9) = {0.52, 0.45, 0, 0.02};
-Point(10) = {0.48, 0.45, 0, 0.02};
-Point(11) = {0.48, 0.1, 0, 0.02};
-Point(12) = {0.0, 0.1, 0, 0.05};
+// Geometry parameters
+domain_width = 1.0;
+domain_height = 1.0;
+slit_width = 0.04;  // Width of each slit opening
+slit_height = 0.1;  // Height of each slit opening
+bridge_height = 0.04;  // Height of central bridge
+wall_thickness = 0.0;  // Can be increased for thicker walls
 
-Point(13) = {0.52, 0.52, 0, 0.02};
-Point(14) = {0.48, 0.52, 0, 0.02};
-Point(15) = {0.48, 0.48, 0, 0.02};
-Point(16) = {0.52, 0.48, 0, 0.05};
+// Mesh size parameters
+mesh_size_coarse = 0.05;
+mesh_size_fine = 0.02;
+mesh_size_bridge = 0.004;
+
+// Calculated positions
+center_x = domain_width / 2.0;
+center_y = domain_height / 2.0;
+half_slit = slit_width / 2.0;
+half_bridge = bridge_height / 2.0;
+slit_bottom = center_y - slit_height / 2.0;
+slit_top = center_y + slit_height / 2.0;
+
+// Define points
+Point(1) = {0.0, domain_height - 0.1, 0, mesh_size_coarse};
+Point(2) = {center_x - half_slit, domain_height - 0.1, 0, mesh_size_fine};
+Point(3) = {center_x - half_slit, slit_top, 0, mesh_size_fine};
+Point(4) = {center_x + half_slit, slit_top, 0, mesh_size_fine};
+Point(5) = {center_x + half_slit, domain_height - 0.1, 0, mesh_size_fine};
+Point(6) = {domain_width, domain_height - 0.1, 0, mesh_size_coarse};
+Point(7) = {domain_width, 0.1, 0, mesh_size_coarse};
+Point(8) = {center_x + half_slit, 0.1, 0, mesh_size_fine};
+Point(9) = {center_x + half_slit, slit_bottom, 0, mesh_size_fine};
+Point(10) = {center_x - half_slit, slit_bottom, 0, mesh_size_fine};
+Point(11) = {center_x - half_slit, 0.1, 0, mesh_size_fine};
+Point(12) = {0.0, 0.1, 0, mesh_size_coarse};
+
+Point(13) = {center_x + half_slit, center_y + half_bridge, 0, mesh_size_fine};
+Point(14) = {center_x - half_slit, center_y + half_bridge, 0, mesh_size_fine};
+Point(15) = {center_x - half_slit, center_y - half_bridge, 0, mesh_size_fine};
+Point(16) = {center_x + half_slit, center_y - half_bridge, 0, mesh_size_coarse};
 
 // Define lines
 Line(1) = {1, 2};
@@ -57,18 +78,20 @@ Physical Curve("outlet", 30) = {27};
 //+
 Physical Curve("wall", 31) = {17, 19, 20, 22, 24, 15, 14, 16, 13, 23, 26, 28, 25, 21};
 
-//+
+// Field for refined meshing around bridge
 Field[1] = Box;
 Field[1].Thickness = 0.3;
-Field[1].XMin = 0.48;
-Field[1].XMax = 0.52;
-Field[1].YMin = 0.45;
-Field[1].YMax = 0.55;
+Field[1].XMin = center_x - half_slit;
+Field[1].XMax = center_x + half_slit;
+Field[1].YMin = slit_bottom;
+Field[1].YMax = slit_top;
 Field[1].ZMin = 0;
 Field[1].ZMax = 0;
-Field[1].VIn = 0.004;
-Field[1].VOut = 0.02;
-Background Field = 1;//+
+Field[1].VIn = mesh_size_bridge;
+Field[1].VOut = mesh_size_fine;
+Background Field = 1;
+
+//+
 Show "*";
 //+
 Physical Surface("domain", 32) = {1};
