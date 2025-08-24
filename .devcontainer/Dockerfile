@@ -1,7 +1,7 @@
 # Dolfinx image
 FROM dolfinx/dolfinx:v0.9.0
 
-# Install ipykernel if not already there
+# Install additional required python packages
 RUN pip install ipykernel matplotlib nbconvert notebook
 
 # Add the complex mode activation to bashrc
