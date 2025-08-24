@@ -3,7 +3,7 @@ SetFactory("OpenCASCADE");
 
 // Geometry parameters
 domain_width = 5;
-domain_height = 2.0;
+domain_height = 5.0;
 slit_width = 0.003;  // Width of each slit opening
 slit_height = 0.4;  // Height of each slit opening
 bridge_height = 0.3;  // Height of central bridge
