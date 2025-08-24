@@ -68,4 +68,7 @@ Field[1].ZMin = 0;
 Field[1].ZMax = 0;
 Field[1].VIn = 0.004;
 Field[1].VOut = 0.02;
-Background Field = 1;
+Background Field = 1;//+
+Show "*";
+//+
+Physical Surface("domain", 32) = {1};
